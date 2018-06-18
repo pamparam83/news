@@ -3,7 +3,7 @@
 /* @var $this yii\web\View */
 /* @var $user \core\entities\User\User */
 
-$confirmLink = Yii::$app->urlManager->createAbsoluteUrl(['auth/signup/confirm', 'token' => $user->email_confirm_token]);
+$confirmLink = Yii::$app->urlManager->createAbsoluteUrl(['/signup/confirm', 'token' => $user->email_confirm_token]);
 ?>
 Привет, <?= $user->username ?>,
 
