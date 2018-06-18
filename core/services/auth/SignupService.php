@@ -3,8 +3,7 @@
 namespace core\services\auth;
 
 use core\access\Rbac;
-use core\dispatchers\EventDispatcher;
-use core\entities\User\User;
+use core\entities\User;
 use core\forms\auth\SignupForm;
 use core\repositories\UserRepository;
 use core\services\RoleManager;
@@ -18,10 +17,8 @@ class SignupService
     private $roles;
     private $transaction;
     private $mailer;
-    public $supportEmail;
 
     public function __construct(
-        $supportEmail,
         UserRepository $users,
         RoleManager $roles,
         TransactionManager $transaction,
@@ -29,7 +26,6 @@ class SignupService
     )
     {
         $this->users = $users;
-        $this->supportEmail = $supportEmail;
         $this->roles = $roles;
         $this->transaction = $transaction;
         $this->mailer = $mailer;
@@ -44,9 +40,6 @@ class SignupService
         $user = User::requestSignup(
             $form->username,
             $form->email,
-            $form->first_name,
-            $form->last_name,
-            $form->phone,
             $form->password
         );
         $this->transaction->wrap(function () use ($user) {
@@ -58,7 +51,7 @@ class SignupService
                 ['html' => 'auth/signup/confirm-html', 'text' => 'auth/signup/confirm-text'],
                 ['user' => $user]
             )
-            ->setFrom($this->supportEmail)
+            ->setFrom(Yii::$app->params['supportEmail'])
             ->setTo($user->email)
             ->setSubject('Подтверждение Email на ' . Yii::$app->name)
             ->send();
@@ -68,6 +61,9 @@ class SignupService
         }
     }
 
+    /**
+     * @param $token
+     */
     public function confirm($token)
     {
         if (empty($token)) {
