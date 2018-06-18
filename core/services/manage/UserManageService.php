@@ -2,7 +2,7 @@
 
 namespace core\services\manage;
 
-use core\entities\User\User;
+use core\entities\User;
 use core\forms\User\UserCreateForm;
 use core\forms\User\UserEditForm;
 use core\repositories\UserRepository;
@@ -14,10 +14,7 @@ class UserManageService
     private $repository;
     private $roles;
     private $transaction;
-    /**
-     * @var Newsletter
-     */
-    private $newsletter;
+
 
     public function __construct(
         UserRepository $repository,
@@ -37,7 +34,6 @@ class UserManageService
      */
     public function create(UserCreateForm $form)
     {
-//        print_r($form);exit;
         $user = User::create(
             $form->username,
             $form->email,
@@ -61,8 +57,7 @@ class UserManageService
         $user = $this->repository->get($id);
         $user->edit(
             $form->username,
-            $form->email,
-            $form->phone
+            $form->email
         );
         $this->transaction->wrap(function () use ($user, $form) {
             $this->repository->save($user);

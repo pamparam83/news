@@ -19,6 +19,7 @@ class SignupService
     private $mailer;
 
     public function __construct(
+        $supportEmail,
         UserRepository $users,
         RoleManager $roles,
         TransactionManager $transaction,
@@ -26,6 +27,7 @@ class SignupService
     )
     {
         $this->users = $users;
+        $this->supportEmail = $supportEmail;
         $this->roles = $roles;
         $this->transaction = $transaction;
         $this->mailer = $mailer;
@@ -51,7 +53,7 @@ class SignupService
                 ['html' => 'auth/signup/confirm-html', 'text' => 'auth/signup/confirm-text'],
                 ['user' => $user]
             )
-            ->setFrom(Yii::$app->params['supportEmail'])
+            ->setFrom($this->supportEmail)
             ->setTo($user->email)
             ->setSubject('Подтверждение Email на ' . Yii::$app->name)
             ->send();
