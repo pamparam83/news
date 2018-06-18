@@ -3,7 +3,7 @@
 namespace core\forms\auth;
 
 
-use core\entities\User\User;
+use core\entities\User;
 use yii\base\Model;
 
 class PasswordChangeForm extends Model
@@ -52,7 +52,8 @@ class PasswordChangeForm extends Model
     }
 
     /**
-     * @return boolean
+     * @return bool
+     * @throws \yii\base\Exception
      */
     public function changePassword()
     {

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace frontend\controllers\auth;
+namespace app\controllers;
 
 use core\forms\auth\ResetPasswordForm;
 use Yii;
