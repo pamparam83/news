@@ -14,12 +14,13 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'id')->hiddenInput(['value'=>$model->id])->label(false); ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', [
                 'class' => 'btn btn-success',
                 'id' => 'user-save',
-                 'data-id' => $model->id,
+
             ]) ?>
     </div>
 

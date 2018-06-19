@@ -98,25 +98,29 @@ class UserController extends Controller
     /**
      * Updates an existing User model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
+    public function actionUpdate()
     {
+        $data = Yii::$app->request->post();
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $id = !empty($data['id']) ? $data['id'] : $data['UserEditForm']['id'];
+
         $user = $this->findModel($id);
         $form = new UserEditForm($user);
 
-
-        if ($form->load(Yii::$app->request->post()) ) {
-            try {
-                $this->service->edit($user->id, $form);
-                return $this->redirect(['view', 'id' => $user->id]);
-            } catch (\DomainException $e) {
-                Yii::$app->errorHandler->logException($e);
-                Yii::$app->session->setFlash('error', $e->getMessage());
-            }
-        }
+        if(Yii::$app->request->isAjax){
+              if ($form->load(Yii::$app->request->post()) ) {
+                  try {
+                      $this->service->edit($user->id, $form);
+                      return $this->actionView($user->id);
+                  } catch (\DomainException $e) {
+                      Yii::$app->errorHandler->logException($e);
+                      Yii::$app->session->setFlash('error', $e->getMessage());
+                  }
+              }
+      }
         return $this->renderAjax('update', [
             'model' => $form,
             'user' => $user,
@@ -152,7 +156,6 @@ class UserController extends Controller
         if (($model = User::findOne($id)) !== null) {
             return $model;
         }
-
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 }

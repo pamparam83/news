@@ -6,14 +6,15 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $user core\entities\User */
 
-$this->title = $model->id;
+$this->title = $model->username;
 $this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
+    <?= Html::a('Users','/user/index', ['id' => 'user-link'])?>|
+    <?= Html::a('view',['/user/view','id' => $model->id], ['id' => 'user-view', 'data-key' => $model->id])?>
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->id],
             [

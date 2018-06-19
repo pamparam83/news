@@ -18,6 +18,7 @@ class UserEditForm extends Model
     public function __construct(User $user, $config = [])
     {
         $this->username = $user->username;
+        $this->id = $user->id;
         $this->email = $user->email;
         $roles = Yii::$app->authManager->getRolesByUser($user->id);
         $this->role = $roles ? reset($roles)->name : null;

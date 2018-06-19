@@ -28,7 +28,7 @@ $(document).ready(function(){
         $.ajax({
             url: '/user/update',
             data: {'id': id},
-            type: "GET",
+            type: "POST",
             success: function(data){
                 $('#user').html(data);
             }
@@ -36,12 +36,33 @@ $(document).ready(function(){
         return false;
     });
     $('#modalUser').on('click','#user-save',function(){
-        let form = $(this).closest('form').serialize(),
-            id = $(this).data('id');
+        let form = $(this).closest('form').serialize();
         $.ajax({
             url: '/user/update',
-            data: "id="+ id + "&"+form,
+            data: form,
             type: "POST",
+            success: function(data){
+                $('#user').html(data);
+            }
+        });
+        return false;
+    });
+    $('#modalUser').on('click','#user-link',function(){
+        $.ajax({
+            url: '/user/index',
+            type: "GET",
+            success: function(data){
+                $('#user').html(data);
+            }
+        });
+        return false;
+    });
+    $('#modalUser').on('click','#user-view',function(){
+        id = $(this).data('key');
+        $.ajax({
+            url: '/user/view',
+            data: {'id': id},
+            type: "GET",
             success: function(data){
                 $('#user').html(data);
             }
