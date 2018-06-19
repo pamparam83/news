@@ -23,6 +23,11 @@ class UserRepository
         return User::findByPasswordResetToken($token);
     }
 
+    public function lastAuthorization(User $user)
+    {
+        $user->updated_at = time();
+        $this->save($user);
+    }
     public function getByPasswordResetToken($token)
     {
         return $this->getBy(['password_reset_token' => $token]);

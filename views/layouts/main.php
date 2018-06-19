@@ -8,6 +8,7 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
+use yii\bootstrap\Modal;
 
 AppAsset::register($this);
 ?>
@@ -46,7 +47,11 @@ AppAsset::register($this);
         $menuItems[] = ['label' => 'Sign up', 'url' => ['/signup']];
 
     } else {
-        $menuItems[] = ['label' => 'Users', 'url' => ['/user']];
+        $menuItems[] = ['label' => 'Users', 'url' => ['/user'],
+            'linkOptions' => [
+                    'id' => 'modal',
+                'data-toggle' => 'modal',
+                'data-target' => '#modalUser']];
         $menuItems[] = '<li>'
             . Html::beginForm(['/auth/logout'], 'post')
             . Html::submitButton(
@@ -72,7 +77,16 @@ AppAsset::register($this);
         <?= $content ?>
     </div>
 </div>
+<?php Modal::begin([
+        'id' => 'modalUser',
+        'size' => 'modal-lg',
+  ]);
 
+  echo '<div id="user"></div>';
+
+  Modal::end();
+
+?>
 <footer class="footer">
     <div class="container">
         <p class="pull-left">&copy; My Company <?= date('Y') ?></p>

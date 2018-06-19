@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use core\forms\User\UserEditForm;
+use core\services\manage\UserManageService;
 use Yii;
 use core\entities\User;
 use app\models\UserSearch;
@@ -15,6 +17,14 @@ use yii\filters\AccessControl;
  */
 class UserController extends Controller
 {
+    public $service;
+
+    public function __construct(string $id, $module, UserManageService $service,array $config = [])
+    {
+        parent::__construct($id, $module, $config);
+        $this->service = $service;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -33,7 +43,7 @@ class UserController extends Controller
             'verbs' => [
                 'class' => VerbFilter::class,
                 'actions' => [
-                    'logout' => ['post'],
+                    'delete' => ['post'],
                 ],
             ],
         ];
@@ -48,7 +58,7 @@ class UserController extends Controller
         $searchModel = new UserSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
+        return $this->renderAjax('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -62,7 +72,7 @@ class UserController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
+        return $this->renderAjax('view', [
             'model' => $this->findModel($id),
         ]);
     }
@@ -94,17 +104,26 @@ class UserController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        $user = $this->findModel($id);
+        $form = new UserEditForm($user);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+
+        if ($form->load(Yii::$app->request->post()) ) {
+            try {
+                $this->service->edit($user->id, $form);
+                return $this->redirect(['view', 'id' => $user->id]);
+            } catch (\DomainException $e) {
+                Yii::$app->errorHandler->logException($e);
+                Yii::$app->session->setFlash('error', $e->getMessage());
+            }
         }
-
-        return $this->render('update', [
-            'model' => $model,
+        return $this->renderAjax('update', [
+            'model' => $form,
+            'user' => $user,
         ]);
     }
 
+    // todo добавить поле lastAuthorization в БД
     /**
      * Deletes an existing User model.
      * If deletion is successful, the browser will be redirected to the 'index' page.

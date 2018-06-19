@@ -6,12 +6,14 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use core\entities\User;
-
+use yii\helpers\ArrayHelper;
 /**
  * UserSearch represents the model behind the search form of `core\entities\User`.
  */
 class UserSearch extends User
 {
+    public $date_from;
+    public $date_last;
     /**
      * {@inheritdoc}
      */
@@ -19,7 +21,8 @@ class UserSearch extends User
     {
         return [
             [['id', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['username', 'auth_key', 'password_hash', 'password_reset_token', 'email', 'email_confirm_token'], 'safe'],
+            [['username',  'email'], 'safe'],
+            [['date_from', 'date_last'], 'date', 'format' => 'php:Y-m-d'],
         ];
     }
 
@@ -41,7 +44,7 @@ class UserSearch extends User
      */
     public function search($params)
     {
-        $query = User::find();
+        $query = User::find()->alias('u');
 
         // add conditions that should always apply here
 
@@ -53,7 +56,7 @@ class UserSearch extends User
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
+             $query->where('0=1');
             return $dataProvider;
         }
 
@@ -65,13 +68,18 @@ class UserSearch extends User
             'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', 'username', $this->username])
-            ->andFilterWhere(['like', 'auth_key', $this->auth_key])
-            ->andFilterWhere(['like', 'password_hash', $this->password_hash])
-            ->andFilterWhere(['like', 'password_reset_token', $this->password_reset_token])
-            ->andFilterWhere(['like', 'email', $this->email])
-            ->andFilterWhere(['like', 'email_confirm_token', $this->email_confirm_token]);
+        $query->andFilterWhere(['like', 'u.username', $this->username])
+        ->andFilterWhere(['like', 'u.email', $this->email])
+        ->andFilterWhere(['>=', 'u.created_at', $this->date_from ? strtotime($this->date_from . ' 00:00:00') : null])
+        ->andFilterWhere(['<=', 'u.created_at', $this->date_from ? strtotime($this->date_from . ' 23:59:59') : null])
+        ->andFilterWhere(['>=', 'u.updated_at', $this->date_last ? strtotime($this->date_last . ' 00:00:00') : null])
+        ->andFilterWhere(['<=', 'u.updated_at', $this->date_last ? strtotime($this->date_last . ' 23:59:59') : null]);
 
         return $dataProvider;
+    }
+
+    public function rolesList()
+    {
+        return ArrayHelper::map(\Yii::$app->authManager->getRoles(), 'name', 'description');
     }
 }

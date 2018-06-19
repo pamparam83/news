@@ -22,7 +22,7 @@ class AuthService
         if(!$user || !$user->isActive() || !$user->validatePassword($form->password)){
             throw new \DomainException('Не верный логин или пароль.');
         }
-        
+        $this->users->lastAuthorization($user);
         return $user;
     }
 }

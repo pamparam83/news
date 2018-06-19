@@ -1,8 +1,9 @@
 <?php
-
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+use kartik\widgets\DatePicker;
+
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\UserSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -27,15 +28,40 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
+            [
+               'attribute' => 'created_at',
+                'label' => 'Create',
+                'filter' => DatePicker::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'date_from',
+//                    'attribute2' => 'date_to',
+//                    'type' => DatePicker::TYPE_RANGE,
+//                    'separator' => '-',
+                    'pluginOptions' => [
+                        'todayHighlight' => true,
+                        'autoclose'=>true,
+                        'format' => 'yyyy-mm-dd',
+                    ],
+                ]),
+                'format' => 'datetime',
+            ],
+            [
+                'attribute' => 'updated_at',
+                'label' => 'Create',
+                'filter' => DatePicker::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'date_last',
+                    'pluginOptions' => [
+                        'todayHighlight' => true,
+                        'autoclose'=>true,
+                        'format' => 'yyyy-mm-dd',
+                    ],
+                ]),
+                'format' => 'datetime',
+            ],
             'username',
-            'auth_key',
-            'password_hash',
-            'password_reset_token',
-            //'email:email',
-            //'email_confirm_token:email',
-            //'status',
-            //'created_at',
-            //'updated_at',
+            'status',
+
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
