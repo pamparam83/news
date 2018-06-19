@@ -14,7 +14,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?= Html::a('Users','/user/index', ['id' => 'user-link'])?>|
-    <?= Html::a('view',['/user/view','id' => $model->id], ['id' => 'user-view', 'data-key' => $model->id])?>
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->id],
             [
