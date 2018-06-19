@@ -50,19 +50,24 @@ class UserController extends Controller
         ];
     }
 
+    public function actionIndexAjax($searchModel,$dataProvider)
+    {
+        return $this->renderAjax('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
     /**
      * Lists all User models.
      * @return mixed
      */
+
     public function actionIndex()
     {
         $searchModel = new UserSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->renderAjax('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+        return $this->actionIndexAjax($searchModel,$dataProvider);
     }
 
     /**

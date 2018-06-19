@@ -111,4 +111,25 @@ $(document).ready(function(){
         });
         return false;
     });
+
+    $('#modalUser').on('click','.filters',function(){
+        // $(':input').change(function(){
+        //         var test = [];
+        //     $(':input').each(function(i, input) {
+        //             test.push($(input).val());
+        //         });
+        //
+        //         alert(test);
+
+
+        // $.ajax({
+        //     url: '/user/create',
+        //     type: "GET",
+        //     success: function(data){
+        //         $('#user').html(data);
+        //     }
+        // });
+        return false;
+        // });
+    });
 });

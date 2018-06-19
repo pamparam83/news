@@ -9,7 +9,7 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 use yii\bootstrap\Modal;
-
+use yii\widgets\Pjax;
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
@@ -81,11 +81,10 @@ AppAsset::register($this);
         'id' => 'modalUser',
         'size' => 'modal-lg',
   ]);
-
-  echo '<div id="user"></div>';
-
+    Pjax::begin(['id' => 'grid-view']);
+        echo '<div id="user"></div>';
+    Pjax::end();
   Modal::end();
-
 ?>
 <footer class="footer">
     <div class="container">
