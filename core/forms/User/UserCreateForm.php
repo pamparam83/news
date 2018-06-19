@@ -2,7 +2,7 @@
 
 namespace core\forms\User;
 
-use core\entities\User\User;
+use core\entities\User;
 use yii\base\Model;
 use yii\helpers\ArrayHelper;
 
@@ -10,6 +10,7 @@ class UserCreateForm extends Model
 {
     public $username;
     public $email;
+    public $id;
     public $password;
     public $role;
 
@@ -19,7 +20,7 @@ class UserCreateForm extends Model
             [['username', 'email'], 'required'],
             ['email', 'email'],
             [['username','email'], 'string', 'max' => 255],
-            [['phone','role'], 'string', 'max' => 20],
+            ['role', 'string', 'max' => 20],
             ['role','default','value' => 'User'],
             [['username', 'email'], 'unique', 'targetClass' => User::class],
             ['password', 'string', 'min' => 6],

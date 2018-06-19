@@ -35,10 +35,42 @@ $(document).ready(function(){
         });
         return false;
     });
+    $('#modalUser').on('click','#delete',function() {
+        if(confirm('Are you sure you want to delete this item?')) {
+            let id = $(this).data('delete');
+            $.ajax({
+                url: '/user/delete',
+                data: {'id': id},
+                type: "POST",
+                success: function (data) {
+                    $('#user').html(data);
+                }
+            });
+        }
+        return false;
+    });
+    $('#modalUser').on('click','[aria-label = "Delete"]',function() {
+        if(confirm('Are you sure you want to delete this item?')){
+            let id = $(this).closest('tr').data('key');
+            $.ajax({
+                url: '/user/delete',
+                data: {'id': id},
+                type: "POST",
+                success: function(data){
+                    $('#user').html(data);
+                }
+            });
+        }
+        return false;
+    });
+
     $('#modalUser').on('click','#user-save',function(){
-        let form = $(this).closest('form').serialize();
+        let form = $(this).closest('form').serialize(),
+            id = $('#usercreateform-id').val(),
+            url = (id === '') ? '/user/create' : '/user/update';
+
         $.ajax({
-            url: '/user/update',
+            url: url,
             data: form,
             type: "POST",
             success: function(data){
@@ -62,6 +94,16 @@ $(document).ready(function(){
         $.ajax({
             url: '/user/view',
             data: {'id': id},
+            type: "GET",
+            success: function(data){
+                $('#user').html(data);
+            }
+        });
+        return false;
+    });
+    $('#modalUser').on('click','#create',function(){
+        $.ajax({
+            url: '/user/create',
             type: "GET",
             success: function(data){
                 $('#user').html(data);

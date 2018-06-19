@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use core\forms\User\UserCreateForm;
 use core\forms\User\UserEditForm;
 use core\services\manage\UserManageService;
 use Yii;
@@ -84,14 +85,23 @@ class UserController extends Controller
      */
     public function actionCreate()
     {
-        $model = new User();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        $form = new UserCreateForm();
+        if (Yii::$app->request->isAjax) {
+            if ($form->load(Yii::$app->request->post()) && $form->validate()) {
+                try {
+                    $user = $this->service->create($form);
+                    return $this->actionView($user->id);
+                } catch (\DomainException $e) {
+                    Yii::$app->errorHandler->logException($e);
+                    Yii::$app->session->setFlash('error', $e->getMessage());
+                }
+            }
         }
 
-        return $this->render('create', [
-            'model' => $model,
+        return $this->renderAjax('create', [
+            'model' => $form,
+
         ]);
     }
 
@@ -137,11 +147,13 @@ class UserController extends Controller
      * @throws \Throwable
      * @throws \yii\db\StaleObjectException
      */
-    public function actionDelete($id)
+    public function actionDelete()
     {
-        $this->findModel($id)->delete();
+        $data = Yii::$app->request->post();
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $this->findModel($data['id'])->delete();
 
-        return $this->redirect(['index']);
+        return $this->actionIndex();
     }
 
     /**

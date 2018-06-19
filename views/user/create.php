@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="user-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
+    <?= Html::a('Users','/user/index', ['id' => 'user-link'])?>
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>
