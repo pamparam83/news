@@ -48,11 +48,7 @@ AppAsset::register($this);
         $menuItems[] = ['label' => 'manager', 'url' =>'#',
             'items' =>[
                 ['label' => 'News', 'url' => '/manager/news'],
-                ['label' => 'Users', 'url' => ['/manager/user'],
-                    'linkOptions' => [
-                        'id' => 'modal',
-                        'data-toggle' => 'modal',
-                        'data-target' => '#modalUser']],
+                ['label' => 'Users', 'url' => ['/manager/user']],
             ]];
 
         $menuItems[] = '<li>'
@@ -80,15 +76,6 @@ AppAsset::register($this);
         <?= $content ?>
     </div>
 </div>
-<?php Modal::begin([
-        'id' => 'modalUser',
-        'size' => 'modal-lg',
-  ]);
-    Pjax::begin(['id' => 'grid-view']);
-        echo '<div id="user"></div>';
-    Pjax::end();
-  Modal::end();
-?>
 <footer class="footer">
     <div class="container">
         <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
