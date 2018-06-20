@@ -2,22 +2,22 @@
 
 namespace core\services\manage\Blog;
 
-use core\entities\Blog\Post;
-use core\forms\manage\Blog\Post\PostForm;
-use core\repositories\Blog\PostRepository;
+use core\entities\News;
+use core\forms\news\NewsForm;
+use core\repositories\Blog\NewsRepository;
 
-class PostManageService
+class NewsManageService
 {
     private $posts;
 
-    public function __construct(PostRepository $posts)    {
+    public function __construct(NewsRepository $posts)    {
         $this->posts = $posts;
     }
 
-    public function create(PostForm $form)
+    public function create(NewsForm $form)
     {
 
-        $post = Post::create(
+        $post = News::create(
             $form->title,
             $form->description,
             $form->content
@@ -33,7 +33,7 @@ class PostManageService
         return $post;
     }
 
-    public function edit($id, PostForm $form)
+    public function edit($id, NewsForm $form)
     {
         $post = $this->posts->get($id);
 

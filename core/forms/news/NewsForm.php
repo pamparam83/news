@@ -1,19 +1,19 @@
 <?php
-namespace core\forms\manage\Blog\Post;
+namespace core\forms\news;
 
-use core\entities\Blog\Post;
+use core\entities\News;
 use yii\base\Model;
 use yii\web\UploadedFile;
 
 
-class PostForm extends Model
+class NewsForm extends Model
 {
     public $title;
     public $description;
     public $content;
     public $photo;
 
-    public function __construct(Post $post = null, $config = [])
+    public function __construct(News $post = null, $config = [])
     {
         if ($post) {
             $this->title = $post->title;

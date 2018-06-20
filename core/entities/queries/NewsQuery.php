@@ -1,11 +1,11 @@
 <?php
 
-namespace core\entities\Blog\Post\queries;
+namespace core\entities\queries;
 
-use core\entities\Blog\Post;
+use core\entities\News;
 use yii\db\ActiveQuery;
 
-class PostQuery extends ActiveQuery
+class NewsQuery extends ActiveQuery
 {
     /**
      * @param null $alias
@@ -14,7 +14,7 @@ class PostQuery extends ActiveQuery
     public function active($alias = null)
     {
         return $this->andWhere([
-            ($alias ? $alias . '.' : '') . 'status' => Post::STATUS_ACTIVE,
+            ($alias ? $alias . '.' : '') . 'status' => News::STATUS_ACTIVE,
         ]);
     }
 }

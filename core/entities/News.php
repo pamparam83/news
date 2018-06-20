@@ -1,9 +1,7 @@
 <?php
+namespace core\entities;
 
-namespace core\entities\Blog;
-
-use core\entities\Blog\Post\queries\PostQuery;
-use yii\db\ActiveQuery;
+use core\entities\queries\NewsQuery;
 use yii\db\ActiveRecord;
 use yii\web\UploadedFile;
 use yiidreamteam\upload\ImageUploadBehavior;
@@ -19,7 +17,7 @@ use yiidreamteam\upload\ImageUploadBehavior;
  *
  * @mixin ImageUploadBehavior
  */
-class Post extends ActiveRecord
+class News extends ActiveRecord
 {
     const STATUS_DRAFT = 0;
     const STATUS_ACTIVE = 1;
@@ -53,7 +51,7 @@ class Post extends ActiveRecord
     public function activate()
     {
         if ($this->isActive()) {
-            throw new \DomainException('Post is already active.');
+            throw new \DomainException('News is already active.');
         }
         $this->status = self::STATUS_ACTIVE;
     }
@@ -61,7 +59,7 @@ class Post extends ActiveRecord
     public function draft()
     {
         if ($this->isDraft()) {
-            throw new \DomainException('Post is already draft.');
+            throw new \DomainException('News is already draft.');
         }
         $this->status = self::STATUS_DRAFT;
     }
@@ -80,7 +78,7 @@ class Post extends ActiveRecord
 
     public static function tableName()
     {
-        return '{{%blog_posts}}';
+        return '{{%news}}';
     }
 
     public function behaviors()
@@ -112,8 +110,8 @@ class Post extends ActiveRecord
         ];
     }
 
-    public static function find(): PostQuery
+    public static function find(): NewsQuery
     {
-        return new PostQuery(static::class);
+        return new NewsQuery(static::class);
     }
 }
