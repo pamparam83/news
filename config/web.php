@@ -33,7 +33,7 @@ $config = [
                 'name' => '_identity',
                 'httpOnly' => true,
             ],
-            'loginUrl' => ['login'],
+            'loginUrl' => ['auth/login'],
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
