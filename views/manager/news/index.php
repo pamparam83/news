@@ -4,7 +4,6 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use core\entities\News;
 use core\helpers\NewsHelper;
-use yii\bootstrap\Modal;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\NewsSearch */
@@ -20,9 +19,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('Create News', ['create'], ['class' => 'btn btn-success create',
-//            'id' => 'modal',
-            'data-toggle' => 'modal',
-            'data-target' => '#modal',
+            'value' => \yii\helpers\Url::to(['manager/news/create']),
+
         ]) ?>
     </p>
 
@@ -70,12 +68,3 @@ $this->params['breadcrumbs'][] = $this->title;
     ]); ?>
 
 </div>
-<?php Modal::begin([
-    'id' => 'modal',
-    'header' => '<h2>Hello world</h2>',
-//    'toggleButton' => ['label' => 'click me'],
-//    'footer' => 'Низ окна',
-]);
-echo '<div class="modal-content"></div>';
-Modal::end();
-?>

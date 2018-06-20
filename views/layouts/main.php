@@ -76,6 +76,12 @@ AppAsset::register($this);
         <?= $content ?>
     </div>
 </div>
+<?php Modal::begin([
+    'id' => 'modal',
+]);
+echo '<div id="modelContent"></div>';
+Modal::end();
+?>
 <footer class="footer">
     <div class="container">
         <p class="pull-left">&copy; My Company <?= date('Y') ?></p>

@@ -133,28 +133,18 @@ $(document).ready(function(){
 //         // });
 //     });
 
-
-    // $('#modal').on('click','.create',function(){
-    //     alert(1);
-    //     $.ajax({
-    //         url: '/manager/news/create',
-    //         type: "GET",
-    //         success: function(data){
-    //             $('.modal-body').html(data);
-    //         }
-    //     });
-    //     return false;
-    // });
-});
-
-$('#modal').click(function(){
-    $.ajax({
-        url: '/manager/news/create',
-        type: "GET",
-        success: function(data){
-            alert(data);
-            $('#modal-content').html(data);
-        }
+    $('.create').click(function(){
+        $('#modal').modal('show')
+            .find('#modelContent')
+            .load($(this).attr('value'));
+        return false;
     });
-    return false;
+
+    $('[aria-label = "Update"]').click(function() {
+        $('#modal').modal('show')
+            .find('#modelContent')
+            .load($(this).attr('href'));
+        return false;
+    });
 });
+
