@@ -2,34 +2,28 @@
 
 namespace core\repositories\Blog;
 
-use core\entities\Blog\Post\Post;
-use core\repositories\NotFoundException;
+use core\entities\Blog\Post;
 
 class PostRepository
 {
     public function get($id)
     {
-        if (!$brand = Post::findOne($id)) {
-            throw new NotFoundException('Post is not found.');
+        if (!$post = Post::findOne($id)) {
+            throw new \DomainException('Post is not found.');
         }
-        return $brand;
+        return $post;
     }
 
-    public function existsByCategory($id)
+    public function save(Post $post)
     {
-        return Post::find()->andWhere(['category_id' => $id])->exists();
-    }
-
-    public function save(Post $brand)
-    {
-        if (!$brand->save()) {
+        if (!$post->save()) {
             throw new \RuntimeException('Saving error.');
         }
     }
 
-    public function remove(Post $brand)
+    public function remove(Post $post)
     {
-        if (!$brand->delete()) {
+        if (!$post->delete()) {
             throw new \RuntimeException('Removing error.');
         }
     }
