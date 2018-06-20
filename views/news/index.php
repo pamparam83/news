@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-
+use core\entities\News;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\NewsSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -23,17 +23,42 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'created_at',
-            'title',
-            'description:ntext',
-            'content:ntext',
-            //'photo',
-            //'status',
-
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'value' => function (News $model) {
+                    return $model->photo ? Html::img($model->getThumbFileUrl('photo', 'admin')) : null;
+                },
+                'label' => 'Photo',
+                'format' => 'raw',
+                'contentOptions' => ['style' => 'width: 100px'],
+            ],
+            [
+                'attribute' => 'created_at',
+                'label' => 'Create',
+                'format' => 'datetime',
+            ],
+            [
+                'attribute' => 'title',
+                'value' => function (News $model) {
+                    return Html::a(Html::encode($model->title), ['view', 'id' => $model->id]);
+                },
+                'format' => 'raw',
+            ],
+            [
+                'attribute' => 'description',
+                'value' => function (News $model) {
+                    return Html::a(Html::encode($model->title), ['view', 'id' => $model->id]);
+                },
+                'format' => 'raw',
+            ],
+            [
+                'attribute' => 'status',
+                'filter' => $searchModel->statusList(),
+                'value' => function (News $model) {
+                    return NewsHelper::statusLabel($model->status);
+                },
+                'format' => 'raw',
+            ],
         ],
     ]); ?>
+
 </div>

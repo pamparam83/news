@@ -1,6 +1,6 @@
 <?php
 
-namespace core\repositories\Blog;
+namespace core\repositories\news;
 
 use core\entities\News;
 

@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use core\services\manage\news\NewsManageService;
 use Yii;
 use core\entities\News;
 use app\models\NewsSearch;
@@ -14,21 +15,30 @@ use yii\filters\VerbFilter;
  */
 class NewsController extends Controller
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function behaviors()
+    private $service;
+
+    public function __construct($id, $module, NewsManageService $service, $config = [])
+    {
+        parent::__construct($id, $module, $config);
+        $this->service = $service;
+    }
+
+    public function behaviors(): array
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
+                    'activate' => ['POST'],
+                    'draft' => ['POST'],
+                    'delete-photo' => ['POST'],
+                    'move-photo-up' => ['POST'],
+                    'move-photo-down' => ['POST'],
                 ],
             ],
         ];
     }
-
     /**
      * Lists all News models.
      * @return mixed
@@ -96,11 +106,11 @@ class NewsController extends Controller
     }
 
     /**
-     * Deletes an existing News model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
+     * @param $id
+     * @return \yii\web\Response
+     * @throws NotFoundHttpException
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
      */
     public function actionDelete($id)
     {

@@ -1,10 +1,10 @@
 <?php
 
-namespace core\services\manage\Blog;
+namespace core\services\manage\news;
 
 use core\entities\News;
 use core\forms\news\NewsForm;
-use core\repositories\Blog\NewsRepository;
+use core\repositories\news\NewsRepository;
 
 class NewsManageService
 {

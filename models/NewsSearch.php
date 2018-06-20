@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use core\helpers\NewsHelper;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -70,5 +71,9 @@ class NewsSearch extends News
             ->andFilterWhere(['like', 'photo', $this->photo]);
 
         return $dataProvider;
+    }
+    public function statusList(): array
+    {
+        return NewsHelper::statusList();
     }
 }
