@@ -2,6 +2,7 @@
 
 namespace app\controllers\manager;
 
+use core\forms\news\NewsEditForm;
 use core\forms\news\NewsForm;
 use core\services\manage\news\NewsManageService;
 use Yii;
@@ -110,14 +111,22 @@ class NewsController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
+        $model = $this->findModel($id);
+        $form = new NewsEditForm($model);
+            if ($form->load(Yii::$app->request->post()) && $form->validate()) {
+
+                try {
+                    $this->service->edit($model->id, $form);
+                    return $this->redirect(['view', 'id' => $model->id]);
+                } catch (\DomainException $e) {
+                    Yii::$app->errorHandler->logException($e);
+                    Yii::$app->session->setFlash('error', $e->getMessage());
+                }
+            }
 
         return $this->renderAjax('update', [
-            'model' => $model,
+            'model' => $form,
         ]);
     }
     /**

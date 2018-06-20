@@ -126,7 +126,7 @@ class UserController extends Controller
         $form = new UserEditForm($user);
 
         if(Yii::$app->request->isAjax){
-              if ($form->load(Yii::$app->request->post()) ) {
+              if ($form->load(Yii::$app->request->post()) && $form->validate()) {
                   try {
                       $this->service->edit($user->id, $form);
                       return $this->actionView($user->id);

@@ -3,6 +3,7 @@
 namespace core\services\manage\news;
 
 use core\entities\News;
+use core\forms\news\NewsEditForm;
 use core\forms\news\NewsForm;
 use core\repositories\news\NewsRepository;
 
@@ -33,7 +34,7 @@ class NewsManageService
         return $post;
     }
 
-    public function edit($id, NewsForm $form)
+    public function edit($id, NewsEditForm $form)
     {
         $post = $this->posts->get($id);
 

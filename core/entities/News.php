@@ -22,7 +22,6 @@ class News extends ActiveRecord
     const STATUS_DRAFT = 0;
     const STATUS_ACTIVE = 1;
 
-    public $meta;
 
     public static function create($title, $description, $content)
     {
