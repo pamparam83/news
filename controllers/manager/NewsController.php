@@ -113,6 +113,10 @@ class NewsController extends Controller
     {
 
         $model = $this->findModel($id);
+
+        if(!$this->service->isAuthor($model->author)){
+            return " You no author.";
+        }
         $form = new NewsEditForm($model);
             if ($form->load(Yii::$app->request->post()) && $form->validate()) {
 
@@ -169,6 +173,9 @@ class NewsController extends Controller
      */
     public function actionDelete($id)
     {
+        if(!$this->service->isAuthor($id)){
+            return " You no author.";
+        }
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);

@@ -14,6 +14,7 @@ use yiidreamteam\upload\ImageUploadBehavior;
  * @property string $content
  * @property string $photo
  * @property integer $status
+ * @property integer $author
  *
  * @mixin ImageUploadBehavior
  */
@@ -25,13 +26,14 @@ class News extends ActiveRecord
 
     public static function create($title, $description, $content)
     {
-        $post = new static();
-        $post->title = $title;
-        $post->description = $description;
-        $post->content = $content;
-        $post->status = self::STATUS_DRAFT;
-        $post->created_at = time();
-        return $post;
+        $news = new static();
+        $news->title = $title;
+        $news->description = $description;
+        $news->content = $content;
+        $news->status = self::STATUS_DRAFT;
+        $news->created_at = time();
+        $news->author = \Yii::$app->user->id;
+        return $news;
     }
 
     public function setPhoto(UploadedFile $photo)

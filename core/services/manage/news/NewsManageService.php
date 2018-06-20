@@ -5,6 +5,7 @@ namespace core\services\manage\news;
 use core\entities\News;
 use core\forms\news\NewsEditForm;
 use core\forms\news\NewsForm;
+use core\helpers\NewsHelper;
 use core\repositories\news\NewsRepository;
 
 class NewsManageService
@@ -56,6 +57,10 @@ class NewsManageService
         $post = $this->posts->get($id);
         $post->activate();
         $this->posts->save($post);
+    }
+    public function isAuthor($author)
+    {
+        return NewsHelper::isAuthor($author);
     }
 
     public function draft($id)

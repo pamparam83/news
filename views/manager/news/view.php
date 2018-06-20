@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-
+use \core\helpers\NewsHelper;
 /* @var $this yii\web\View */
 /* @var $model core\entities\News */
 
@@ -15,6 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
+        <?php if(NewsHelper::isAuthor($model->author)):?>
         <?= Html::a('Delete', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
@@ -22,13 +23,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 'method' => 'post',
             ],
         ]) ?>
+        <?php endif;?>
     </p>
             <?= DetailView::widget([
                 'model' => $model,
                 'attributes' => [
                     [
                         'attribute' => 'status',
-                        'value' => \core\helpers\NewsHelper::statusLabel($model->status),
+                        'value' =>NewsHelper::statusLabel($model->status),
                         'format' => 'raw',
                     ],
                     'title',

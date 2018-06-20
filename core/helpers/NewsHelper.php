@@ -38,4 +38,16 @@ class NewsHelper
             'class' => $class,
         ]);
     }
+
+    public static function isAuthor($author)
+    {
+        $role = \Yii::$app->authManager->getRolesByUser(\Yii::$app->user->id);
+        if(reset($role)->name == 'admin'){
+            return true;
+        }
+        if($author == \Yii::$app->user->id){
+            return true;
+        }
+        return false;
+    }
 }

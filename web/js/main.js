@@ -133,6 +133,21 @@ $(document).ready(function(){
 //         // });
 //     });
 
+    $('[aria-label = "Delete"]').click(function() {
+        alert(2);
+        if(confirm('Are you sure you want to delete this item?')){
+            let url = $(this).attr('href');
+            $.ajax({
+                url: url,
+                type: "POST",
+                success: function(data){
+                    alert(data);
+                }
+            });
+            return false;
+        }
+
+    });
     $('.create').click(function(){
         $('#modal').modal('show')
             .find('#modelContent')
@@ -148,9 +163,11 @@ $(document).ready(function(){
     });
 
     $(document).on('click','.activeNews',function(){
-
         let id = $(this).closest('tr').data('key'),
              td = $(this).closest('td');
+        if(id === undefined){
+            return false;
+        }
             $.ajax({
                 url: '/manager/news/draft',
                 data: {'id': id},
@@ -164,6 +181,9 @@ $(document).ready(function(){
     $(document).on('click','.draft',function(){
         let id = $(this).closest('tr').data('key'),
             td = $(this).closest('td');
+        if(id === undefined){
+            return false;
+        }
         $.ajax({
             url: '/manager/news/activate',
             data: {'id': id},
