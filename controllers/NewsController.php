@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use core\forms\news\NewsForm;
 use core\services\manage\news\NewsManageService;
 use Yii;
 use core\entities\News;
@@ -74,14 +75,20 @@ class NewsController extends Controller
      */
     public function actionCreate()
     {
-        $model = new News();
+        $form = new NewsForm();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($form->load(Yii::$app->request->post()) && $form->validate()) {
+            try{
+                $news = $this->service->create($form);
+                return $this->redirect(['view', 'id' => $news->id]);
+            }catch(\DomainException $e){
+                Yii::$app->errorHandler->logException($e);
+                Yii::$app->session->setFlash('error',$e->getMessage());
+            }
         }
 
         return $this->render('create', [
-            'model' => $model,
+            'model' => $form,
         ]);
     }
 
