@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use core\entities\News;
 use core\helpers\NewsHelper;
-
+use kartik\widgets\DatePicker;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\NewsSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -39,6 +39,18 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'created_at',
                 'label' => 'Create',
+                'filter' => DatePicker::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'date_from',
+                    'attribute2' => 'date_to',
+                    'type' => DatePicker::TYPE_RANGE,
+                    'separator' => '-',
+                    'pluginOptions' => [
+                        'todayHighlight' => true,
+                        'autoclose'=>true,
+                        'format' => 'yyyy-mm-dd',
+                    ],
+                ]),
                 'format' => 'datetime',
             ],
             [

@@ -13,6 +13,8 @@ use core\entities\News;
  */
 class NewsSearch extends News
 {
+    public $date_from;
+    public $date_to;
     /**
      * {@inheritdoc}
      */
@@ -21,6 +23,7 @@ class NewsSearch extends News
         return [
             [['id', 'created_at', 'status'], 'integer'],
             [['title', 'description', 'content', 'photo'], 'safe'],
+            [['date_from','date_to'], 'date', 'format' => 'php:Y-m-d'],
         ];
     }
 
@@ -68,6 +71,8 @@ class NewsSearch extends News
         $query->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'description', $this->description])
             ->andFilterWhere(['like', 'content', $this->content])
+            ->andFilterWhere(['>=', 'created_at', $this->date_from ? strtotime($this->date_from . ' 00:00:00') : null])
+            ->andFilterWhere(['<=', 'created_at', $this->date_to ? strtotime($this->date_to . ' 23:59:59') : null])
             ->andFilterWhere(['like', 'photo', $this->photo]);
 
         return $dataProvider;
