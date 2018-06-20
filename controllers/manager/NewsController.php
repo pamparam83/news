@@ -133,28 +133,32 @@ class NewsController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionActivate($id)
+    public function actionActivate()
     {
+        $data = Yii::$app->request->post();
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         try {
-            $this->service->activate($id);
+            $this->service->activate($data['id']);
+            return 'ok';
         } catch (\DomainException $e) {
             Yii::$app->session->setFlash('error', $e->getMessage());
         }
-        return $this->redirect(['view', 'id' => $id]);
     }
 
     /**
      * @param integer $id
      * @return mixed
      */
-    public function actionDraft($id)
+    public function actionDraft()
     {
+        $data = Yii::$app->request->post();
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         try {
-            $this->service->draft($id);
+            $this->service->draft($data['id']);
+            return 'ok';
         } catch (\DomainException $e) {
             Yii::$app->session->setFlash('error', $e->getMessage());
         }
-        return $this->redirect(['view', 'id' => $id]);
     }
     /**
      * @param $id

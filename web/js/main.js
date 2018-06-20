@@ -146,5 +146,34 @@ $(document).ready(function(){
             .load($(this).attr('href'));
         return false;
     });
+
+    $(document).on('click','.activeNews',function(){
+
+        let id = $(this).closest('tr').data('key'),
+             td = $(this).closest('td');
+            $.ajax({
+                url: '/manager/news/draft',
+                data: {'id': id},
+                type: "POST",
+                success: function(){
+                    td.html('<span class="label label-default draft">Draft</span>');
+                }
+            });
+        return false;
+    });
+    $(document).on('click','.draft',function(){
+        let id = $(this).closest('tr').data('key'),
+            td = $(this).closest('td');
+        $.ajax({
+            url: '/manager/news/activate',
+            data: {'id': id},
+            type: "POST",
+            success: function(){
+                td.html('<span class="label label-success activeNews">Active</span>');
+
+            }
+        });
+        return false;
+    });
 });
 

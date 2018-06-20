@@ -25,13 +25,13 @@ class NewsHelper
     {
         switch ($status) {
             case News::STATUS_DRAFT:
-                $class = 'label label-default';
+                $class = 'label label-default draft';
                 break;
             case News::STATUS_ACTIVE:
-                $class = 'label label-success';
+                $class = 'label label-success activeNews';
                 break;
             default:
-                $class = 'label label-default';
+                $class = 'label label-default draft';
         }
 
         return Html::tag('span', ArrayHelper::getValue(self::statusList(), $status), [
