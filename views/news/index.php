@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use core\entities\News;
+use core\helpers\NewsHelper;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\NewsSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -58,6 +59,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
                 'format' => 'raw',
             ],
+            ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
 
