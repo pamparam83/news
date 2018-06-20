@@ -67,6 +67,10 @@ $config = [
             'showScriptName' => false,
             'rules' => [
                 'signup' => 'signup/request',
+                'manager/<_c:[\w\-]+>' => 'manager/<_c>/index',
+                'manager/<_c:[\w\-]+>/<id:\d+>' => 'manager/<_c>/view',
+                'manager/<_c:[\w\-]+>/<_a:[\w-]+>' => 'manager/<_c>/<_a>',
+                'manager/<_c:[\w\-]+>/<id:\d+>/<_a:[\w\-]+>' => 'manager/<_c>/<_a>',
             ],
         ],
     ],

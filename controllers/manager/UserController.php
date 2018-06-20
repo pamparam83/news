@@ -1,6 +1,6 @@
 <?php
 
-namespace app\controllers;
+namespace app\controllers\manager;
 
 use core\forms\User\UserCreateForm;
 use core\forms\User\UserEditForm;

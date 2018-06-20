@@ -1,6 +1,6 @@
 <?php
 
-namespace app\controllers;
+namespace app\controllers\manager;
 
 use core\forms\news\NewsForm;
 use core\services\manage\news\NewsManageService;
