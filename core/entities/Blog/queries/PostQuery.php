@@ -2,7 +2,7 @@
 
 namespace core\entities\Blog\Post\queries;
 
-use core\entities\Blog\Post\Post;
+use core\entities\Blog\Post;
 use yii\db\ActiveQuery;
 
 class PostQuery extends ActiveQuery
