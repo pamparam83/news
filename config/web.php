@@ -15,6 +15,8 @@ $config = [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
         '@core'  => '@app/core',
+        '@photoRoot' => $params['photoPath'],
+        '@host'   => $params['HostInfo'],
     ],
     'components' => [
         'request' => [
@@ -31,7 +33,7 @@ $config = [
                 'name' => '_identity',
                 'httpOnly' => true,
             ],
-            'loginUrl' => ['login'],
+            'loginUrl' => ['auth/login'],
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
@@ -65,6 +67,10 @@ $config = [
             'showScriptName' => false,
             'rules' => [
                 'signup' => 'signup/request',
+                'manager/<_c:[\w\-]+>' => 'manager/<_c>/index',
+                'manager/<_c:[\w\-]+>/<id:\d+>' => 'manager/<_c>/view',
+                'manager/<_c:[\w\-]+>/<_a:[\w-]+>' => 'manager/<_c>/<_a>',
+                'manager/<_c:[\w\-]+>/<id:\d+>/<_a:[\w\-]+>' => 'manager/<_c>/<_a>',
             ],
         ],
     ],

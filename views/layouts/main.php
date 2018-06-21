@@ -36,10 +36,8 @@ AppAsset::register($this);
         ],
     ]);
     $menuItems = [
-                ['label' => 'Home', 'url' => ['/site/index']],
-                ['label' => 'About', 'url' => ['/site/about']],
-                ['label' => 'Contact', 'url' => ['/site/contact']],
-
+            ['label' => 'Home', 'url' => ['/site/index']],
+            ['label' => 'News', 'url' => ['/news/index']],
           ];
 
     if (Yii::$app->user->isGuest) {
@@ -47,11 +45,12 @@ AppAsset::register($this);
         $menuItems[] = ['label' => 'Sign up', 'url' => ['/signup']];
 
     } else {
-        $menuItems[] = ['label' => 'Users', 'url' => ['/user'],
-            'linkOptions' => [
-                    'id' => 'modal',
-                'data-toggle' => 'modal',
-                'data-target' => '#modalUser']];
+        $menuItems[] = ['label' => 'manager', 'url' =>'#',
+            'items' =>[
+                ['label' => 'News', 'url' => '/manager/news'],
+                ['label' => 'Users', 'url' => ['/manager/user']],
+            ]];
+
         $menuItems[] = '<li>'
             . Html::beginForm(['/auth/logout'], 'post')
             . Html::submitButton(
@@ -78,13 +77,10 @@ AppAsset::register($this);
     </div>
 </div>
 <?php Modal::begin([
-        'id' => 'modalUser',
-        'size' => 'modal-lg',
-  ]);
-    Pjax::begin(['id' => 'grid-view']);
-        echo '<div id="user"></div>';
-    Pjax::end();
-  Modal::end();
+    'id' => 'modal',
+]);
+echo '<div id="modelContent"></div>';
+Modal::end();
 ?>
 <footer class="footer">
     <div class="container">
