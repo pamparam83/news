@@ -45,6 +45,9 @@ class NewsReadRepository
         return new ActiveDataProvider([
             'query' => $query,
             'sort' => false,
+            'pagination' => [
+                'pageSize' => 5,
+            ],
         ]);
     }
 }
