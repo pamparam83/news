@@ -50,7 +50,7 @@ AppAsset::register($this);
                 ['label' => 'News', 'url' => '/manager/news'],
                 ['label' => 'Users', 'url' => ['/manager/user']],
             ]];
-
+        $menuItems[] = ['label' => 'Cabinet', 'url' => ['/cabinet']];
         $menuItems[] = '<li>'
             . Html::beginForm(['/auth/logout'], 'post')
             . Html::submitButton(
