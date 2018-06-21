@@ -80,9 +80,8 @@ class UserController extends Controller
     }
 
     /**
-     * Creates a new User model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
+     * @return string|\yii\web\Response
+     * @throws \yii\base\Exception
      */
     public function actionCreate()
     {
@@ -148,11 +147,10 @@ class UserController extends Controller
      * @throws \Throwable
      * @throws \yii\db\StaleObjectException
      */
-    public function actionDelete()
+    public function actionDelete($id)
     {
-        $data = Yii::$app->request->post();
-        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-        $this->findModel($data['id'])->delete();
+
+        $this->findModel($id)->delete();
 
         return $this->actionIndex();
     }
