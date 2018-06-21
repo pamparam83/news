@@ -1,6 +1,7 @@
 <?php
 namespace app\config;
 
+use core\services\manage\news\NewsManageService;
 use core\services\manage\UserManageService;
 use yii\base\BootstrapInterface;
 use core\services\auth\PasswordResetService;
@@ -26,7 +27,9 @@ class SetUp implements BootstrapInterface
         $container->setSingleton(UserManageService::class,[],[
             [$app->params['supportEmail'] => $app->name . ' robot'],
         ]);
-
+        $container->setSingleton(NewsManageService::class,[],[
+            [$app->params['supportEmail'] => $app->name . ' robot'],
+        ]);
         $container->setSingleton(ManagerInterface::class, function () use ($app) {
             return $app->authManager;
         });

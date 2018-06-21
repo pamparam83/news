@@ -6,6 +6,10 @@ use core\entities\News;
 
 class NewsRepository
 {
+    /**
+     * @param $id
+     * @return News|null
+     */
     public function get($id)
     {
         if (!$news = News::findOne($id)) {

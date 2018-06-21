@@ -38,6 +38,13 @@ class UserRepository
         return $this->getBy(['email' => $email]);
     }
 
+    public function getByEmailAll()
+    {
+        if(!$user = User::find()->select('email')->all()){
+            throw new \DomainException('Users is not');
+        }
+        return $user;
+    }
 
     public function save(User $user)
     {

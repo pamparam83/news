@@ -30,7 +30,7 @@ class News extends ActiveRecord
         $news->title = $title;
         $news->description = $description;
         $news->content = $content;
-        $news->status = self::STATUS_DRAFT;
+        $news->status = self::STATUS_ACTIVE;
         $news->created_at = time();
         $news->author = \Yii::$app->user->id;
         return $news;
