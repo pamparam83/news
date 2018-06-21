@@ -15,6 +15,7 @@ $config = [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
         '@core'  => '@app/core',
+        '@public_html'  => '@app/public_html',
         '@photoRoot' => $params['photoPath'],
         '@host'   => $params['HostInfo'],
     ],
