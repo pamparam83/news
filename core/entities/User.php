@@ -20,6 +20,7 @@ use yii\web\IdentityInterface;
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
+ * @property integer $last_auth
  * @property string $password write-only password
  *
  */
@@ -44,6 +45,7 @@ class User extends ActiveRecord implements IdentityInterface
             'status' => 'status',
             'created_at' => 'created_at',
             'updated_at' => 'updated_at',
+            'last_auth' => 'LastAuth',
         ];
     }
 
@@ -59,6 +61,7 @@ class User extends ActiveRecord implements IdentityInterface
         $user = new User();
         $user->username = $username;
         $user->email = $email;
+        $user->last_auth = time();
         $user->setPassword(!empty($password) ? $password : Yii::$app->security->generateRandomString());
         $user->created_at = time();
         $user->status = self::STATUS_ACTIVE;
@@ -87,7 +90,7 @@ class User extends ActiveRecord implements IdentityInterface
         $user->username = $username;
         $user->email = $email;
         $user->setPassword($password);
-        $user->created_at = time();
+        $user->last_auth = time();
         $user->status = self::STATUS_WAIT;
         $user->generateEmailConfirmToken();
         $user->generateAuthKey();

@@ -46,7 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => 'datetime',
             ],
             [
-                'attribute' => 'updated_at',
+                'attribute' => 'last_auth',
                 'label' => 'Create',
                 'filter' => DatePicker::widget([
                     'model' => $searchModel,

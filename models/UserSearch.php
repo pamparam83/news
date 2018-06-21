@@ -20,7 +20,7 @@ class UserSearch extends User
     public function rules()
     {
         return [
-            [['id', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['id', 'status', 'created_at', 'updated_at','last_auth'], 'integer'],
             [['username',  'email'], 'safe'],
             [['date_from', 'date_last'], 'date', 'format' => 'php:Y-m-d'],
         ];
@@ -66,14 +66,15 @@ class UserSearch extends User
             'status' => $this->status,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+            'last_auth' => $this->last_auth,
         ]);
 
         $query->andFilterWhere(['like', 'u.username', $this->username])
         ->andFilterWhere(['like', 'u.email', $this->email])
         ->andFilterWhere(['>=', 'u.created_at', $this->date_from ? strtotime($this->date_from . ' 00:00:00') : null])
         ->andFilterWhere(['<=', 'u.created_at', $this->date_from ? strtotime($this->date_from . ' 23:59:59') : null])
-        ->andFilterWhere(['>=', 'u.updated_at', $this->date_last ? strtotime($this->date_last . ' 00:00:00') : null])
-        ->andFilterWhere(['<=', 'u.updated_at', $this->date_last ? strtotime($this->date_last . ' 23:59:59') : null]);
+        ->andFilterWhere(['>=', 'u.last_auth', $this->date_last ? strtotime($this->date_last . ' 00:00:00') : null])
+        ->andFilterWhere(['<=', 'u.last_auth', $this->date_last ? strtotime($this->date_last . ' 23:59:59') : null]);
 
         return $dataProvider;
     }

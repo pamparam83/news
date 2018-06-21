@@ -25,7 +25,7 @@ class UserRepository
 
     public function lastAuthorization(User $user)
     {
-        $user->updated_at = time();
+        $user->last_auth = time();
         $this->save($user);
     }
     public function getByPasswordResetToken($token)
