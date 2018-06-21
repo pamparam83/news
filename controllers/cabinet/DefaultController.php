@@ -21,6 +21,11 @@ class DefaultController extends Controller
             ],
         ];
     }
+    public function actionPassword()
+    {
+        Yii::$app->session->setFlash('success', 'Password changed.');
+        return $this->redirect('index');
+    }
 
     public function actionIndex()
     {

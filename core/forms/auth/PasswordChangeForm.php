@@ -1,11 +1,8 @@
 <?php
-
 namespace core\forms\auth;
-
 
 use core\entities\User;
 use yii\base\Model;
-
 class PasswordChangeForm extends Model
 {
     public $currentPassword;
@@ -44,18 +41,5 @@ class PasswordChangeForm extends Model
         }
     }
 
-    /**
-     * @return bool
-     * @throws \yii\base\Exception
-     */
-    public function changePassword()
-    {
-        if ($this->validate()) {
-            $user = $this->_user;
-            $user->setPassword($this->newPassword);
-            return $user->save();
-        } else {
-            return false;
-        }
-    }
+
 }

@@ -7,7 +7,7 @@ use core\entities\User;
 use core\forms\auth\ResetPasswordForm;
 use Yii;
 use yii\mail\MailerInterface;
-
+use yii\db\ActiveRecord;
 class PasswordResetService
 {
 
@@ -86,4 +86,38 @@ class PasswordResetService
         $this->users->save($user);
 
    }
+
+
+    /**
+     * @param User $user
+     * @param $form
+     * @return bool
+     * @throws \yii\base\Exception
+     */
+    public function changePassword(User $user, $form)
+    {
+            $user->setPassword($form->newPassword);
+
+            $user->on(ActiveRecord::EVENT_AFTER_UPDATE,[$this,'emailResetPassword'],$user);
+            return $user->save();
+    }
+
+    public function emailResetPassword($event)
+    {
+        $user = $event->sender;
+
+        $send = $this->mailer
+            ->compose(
+                ['html' => 'events/reset/confirm-html', 'text' => 'events/reset/confirm-text'],
+                ['user' => $user]
+            )
+            ->setFrom($this->supportEmail)
+            ->setTo($user->email)
+            ->setSubject('Password reset for ' . Yii::$app->name)
+            ->send();
+
+        if(!$send){
+            throw  new \RuntimeException('Send: sanding error.');
+        }
+    }
 }
