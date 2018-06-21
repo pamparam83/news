@@ -1,6 +1,7 @@
 <?php
 namespace app\config;
 
+use core\services\manage\UserManageService;
 use yii\base\BootstrapInterface;
 use core\services\auth\PasswordResetService;
 use core\services\auth\SignupService;
@@ -19,6 +20,10 @@ class SetUp implements BootstrapInterface
         ]);
 
         $container->setSingleton(SignupService::class,[],[
+            [$app->params['supportEmail'] => $app->name . ' robot'],
+        ]);
+
+        $container->setSingleton(UserManageService::class,[],[
             [$app->params['supportEmail'] => $app->name . ' robot'],
         ]);
 

@@ -75,4 +75,6 @@ class SignupService
         $user->confirmSignup();
         $this->users->save($user);
     }
+
+
 }

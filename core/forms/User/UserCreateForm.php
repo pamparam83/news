@@ -12,30 +12,26 @@ class UserCreateForm extends Model
     public $email;
     public $id;
     public $password;
+    public $passwordConfirm;
     public $role;
 
     public function rules()
     {
         return [
-            [['username', 'email'], 'required'],
+            [['username', 'email','passwordConfirm'], 'required'],
             ['email', 'email'],
             [['username','email'], 'string', 'max' => 255],
             ['role', 'string', 'max' => 20],
             ['role','default','value' => 'User'],
             [['username', 'email'], 'unique', 'targetClass' => User::class],
             ['password', 'string', 'min' => 6],
+
+            [['password','passwordConfirm'], 'string', 'min' => 6],
+            [ ['passwordConfirm'], 'compare', 'compareAttribute' => 'password', 'message'=>'Пароли не совпадают'],
         ];
     }
 
-    public function attributeLabels()
-    {
-        return [
-            'username' => 'Логин',
-            'email' => 'Email',
-            'password' => 'Пароль',
-            'role' => 'Роль',
-        ];
-    }
+
 
     public function rolesList()
     {

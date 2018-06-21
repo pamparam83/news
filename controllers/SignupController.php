@@ -71,5 +71,17 @@ class SignupController extends  Controller
         }
     }
 
+    public function actionConfirmReset($token)
+    {
+        try {
+            $this->service->confirm($token);
+            Yii::$app->session->setFlash('success', 'Ваш email подтвержден. Авторизуйтесь и смените пароль');
+            return $this->redirect(['auth/login']);
+        } catch (\DomainException $e) {
+            Yii::$app->errorHandler->logException($e);
+            Yii::$app->session->setFlash('error', $e->getMessage());
+            return $this->goHome();
+        }
+    }
 
 }

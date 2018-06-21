@@ -45,11 +45,13 @@ AppAsset::register($this);
         $menuItems[] = ['label' => 'Sign up', 'url' => ['/signup']];
 
     } else {
+//        todo закрыть от простого пользователя админское меню
         $menuItems[] = ['label' => 'manager', 'url' =>'#',
             'items' =>[
                 ['label' => 'News', 'url' => '/manager/news'],
                 ['label' => 'Users', 'url' => ['/manager/user']],
             ]];
+
         $menuItems[] = ['label' => 'Cabinet', 'url' => ['/cabinet']];
         $menuItems[] = '<li>'
             . Html::beginForm(['/auth/logout'], 'post')
