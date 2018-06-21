@@ -13,7 +13,6 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="user-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <?= Html::a('Users','/user/index', ['id' => 'user-link'])?>
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->id],
             [

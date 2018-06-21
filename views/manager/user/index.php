@@ -17,7 +17,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create User', ['create'], ['class' => 'btn btn-success', 'id' => 'create']) ?>
+        <?= Html::a('Create User', ['create'], ['class' => 'btn btn-success create',
+            'value' => \yii\helpers\Url::to(['manager/user/create']),
+            ]) ?>
     </p>
 
     <?= GridView::widget([
@@ -25,7 +27,6 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
             'id',
             [
                'attribute' => 'created_at',

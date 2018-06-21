@@ -13,8 +13,6 @@ $this->params['breadcrumbs'][] = 'Update';
 <div class="user-update">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <?= Html::a('Users','/user/index', ['id' => 'user-link'])?>|
-    <?= Html::a('view',['/user/view','id' => $user->id], ['id' => 'user-view', 'data-key' => $user->id])?>
 
     <?= $this->render('_form', [
         'model' => $model,

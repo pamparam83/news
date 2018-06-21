@@ -50,13 +50,6 @@ class UserController extends Controller
         ];
     }
 
-    public function actionIndexAjax($searchModel,$dataProvider)
-    {
-        return $this->renderAjax('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
     /**
      * Lists all User models.
      * @return mixed
@@ -67,7 +60,10 @@ class UserController extends Controller
         $searchModel = new UserSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->actionIndexAjax($searchModel,$dataProvider);
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
     /**
@@ -78,7 +74,7 @@ class UserController extends Controller
      */
     public function actionView($id)
     {
-        return $this->renderAjax('view', [
+        return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
     }
@@ -90,19 +86,17 @@ class UserController extends Controller
      */
     public function actionCreate()
     {
-
         $form = new UserCreateForm();
-        if (Yii::$app->request->isAjax) {
+
             if ($form->load(Yii::$app->request->post()) && $form->validate()) {
                 try {
                     $user = $this->service->create($form);
-                    return $this->actionView($user->id);
+                    return $this->redirect(['view', 'id' => $user->id]);
                 } catch (\DomainException $e) {
                     Yii::$app->errorHandler->logException($e);
                     Yii::$app->session->setFlash('error', $e->getMessage());
                 }
             }
-        }
 
         return $this->renderAjax('create', [
             'model' => $form,
@@ -116,30 +110,32 @@ class UserController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate()
+    public function actionUpdate($id)
     {
-        $data = Yii::$app->request->post();
-        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-        $id = !empty($data['id']) ? $data['id'] : $data['UserEditForm']['id'];
 
         $user = $this->findModel($id);
         $form = new UserEditForm($user);
 
-        if(Yii::$app->request->isAjax){
-              if ($form->load(Yii::$app->request->post()) && $form->validate()) {
-                  try {
-                      $this->service->edit($user->id, $form);
-                      return $this->actionView($user->id);
-                  } catch (\DomainException $e) {
-                      Yii::$app->errorHandler->logException($e);
-                      Yii::$app->session->setFlash('error', $e->getMessage());
-                  }
-              }
-      }
-        return $this->renderAjax('update', [
-            'model' => $form,
-            'user' => $user,
-        ]);
+        if ($form->load(Yii::$app->request->post()) && $form->validate()) {
+            try {
+                $this->service->edit($user->id, $form);
+                return $this->actionView($user->id);
+            } catch (\DomainException $e) {
+                Yii::$app->errorHandler->logException($e);
+                Yii::$app->session->setFlash('error', $e->getMessage());
+            }
+        }
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('update', [
+                'model' => $form,
+                'user' => $user,
+            ]);
+        } else {
+            return $this->render('update', [
+                'model' => $form,
+                'user' => $user,
+            ]);
+        }
     }
 
     // todo добавить поле lastAuthorization в БД
