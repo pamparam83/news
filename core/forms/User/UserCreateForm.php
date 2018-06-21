@@ -15,6 +15,7 @@ class UserCreateForm extends Model
     public $passwordConfirm;
     public $role;
 
+
     public function rules()
     {
         return [
