@@ -173,7 +173,8 @@ class NewsController extends Controller
      */
     public function actionDelete($id)
     {
-        if(!$this->service->isAuthor($id)){
+        $model = $this->findModel($id);
+        if(!$this->service->isAuthor($model->author)){
             return " You no author.";
         }
         $this->findModel($id)->delete();
