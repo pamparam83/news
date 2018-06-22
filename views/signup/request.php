@@ -28,19 +28,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= $form->field($model, 'password')->passwordInput(['placeholder' => 'Password']) ?>
     <?= $form->field($model, 'passwordConfirm')->passwordInput(['placeholder' => 'password confirm']) ?>
 </fieldset>
-<fieldset>
-    <legend>Newsletter</legend>
-    <div class="form-group">
-        <label class="col-sm-2 control-label">Subscribe to news.</label>
-        <div class="col-sm-10">               <label class="radio-inline">
-                <input type="radio" name="newsletter" value="1" />
-                Yes</label>
-            <label class="radio-inline">
-                <input type="radio" name="newsletter" value="0" checked="checked" />
-                No</label>
-        </div>
-    </div>
-</fieldset>
 
 <div class="buttons">
     <div class="pull-right">

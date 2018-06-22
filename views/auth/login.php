@@ -42,6 +42,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php ActiveForm::end(); ?>
 
     <div class="col-lg-offset-1" style="color:#999;">
-        You may login with <strong>admin/demo123</strong> or <strong>demo/demo</strong>.<br>
+        You may login with <strong>admin/demo123</strong> or <strong>manager/demo123</strong>.<br>
     </div>
 </div>

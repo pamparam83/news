@@ -11,7 +11,7 @@ use yii\widgets\LinkPager;
         <label class="input-group-addon" for="input-limit">Показать:</label>
         <select id="input-limit" class="form-control" onchange="location = this.value;">
             <?php
-            $values = [2, 25, 50, 75, 100];
+            $values = ['',2, 5, 10, 75, 100];
             $current = $dataProvider->getPagination()->getPageSize();
             ?>
             <?php foreach ($values as $value): ?>
@@ -20,6 +20,7 @@ use yii\widgets\LinkPager;
         </select>
     </div>
 </div>
+<br><br>
 <?php foreach ($dataProvider->getModels() as $post): ?>
     <?= $this->render('_post', [
         'model' => $post
@@ -27,16 +28,10 @@ use yii\widgets\LinkPager;
 <?php endforeach; ?>
 
 <div class="pagination-result">
-    <div class="pull-left">Показано с <?= $dataProvider->getCount() ?> по <?= $dataProvider->getTotalCount() ?></div>
     <div class="pull-right">
         <?= LinkPager::widget([
             'pagination' => $dataProvider->getPagination(),
         ]) ?>
     </div>
 </div>
-<!---->
-<?//= \yii\widgets\ListView::widget([
-//    'dataProvider' => $dataProvider,
-//    'layout' => "{items}\n{pager}",
-//    'itemView' => '_post',
-//]) ?>
+

@@ -1,6 +1,9 @@
 <?php
 
-$params = require __DIR__ . '/params.php';
+$params = array_merge(
+    require __DIR__ . '/params.php',
+    require __DIR__ . '/params-local.php'
+);
 $db = require __DIR__ . '/db.php';
 
 $config = [
@@ -68,6 +71,10 @@ $config = [
             'showScriptName' => false,
             'rules' => [
                 'signup' => 'signup/request',
+
+                'news' => 'news/index',
+                'news/<id:\d+>' => 'news/item',
+
                 'manager/<_c:[\w\-]+>' => 'manager/<_c>/index',
                 'manager/<_c:[\w\-]+>/<id:\d+>' => 'manager/<_c>/view',
                 'manager/<_c:[\w\-]+>/<_a:[\w-]+>' => 'manager/<_c>/<_a>',

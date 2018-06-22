@@ -46,7 +46,7 @@ class NewsReadRepository
             'query' => $query,
             'sort' => false,
             'pagination' => [
-                'pageSize' => 5,
+                'pageSizeLimit' => 5,
             ],
         ]);
     }

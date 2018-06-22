@@ -26,6 +26,15 @@ class m180226_134214_add_user_admin extends Migration
             'created_at' => time(),
             'updated_at' => time(),
         ],$tableOptions);
+        $this->insert('users',[
+            'username' => 'manager',
+            'email' => 'manager@admin.ru',
+            'password_hash' => '$2y$13$oheBApgxVQmOSfGzHCEeHe3q5jXH8IlyuqWPVj5BlmInagEAqW8Lu',
+            'auth_key' => 'wQtZb9h54mFIeWh7gLytLVKPBujytlHC',
+            'status' => 10,
+            'created_at' => time(),
+            'updated_at' => time(),
+        ],$tableOptions);
     }
 
     /**
