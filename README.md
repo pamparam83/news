@@ -1,4 +1,3 @@
-test-task
 <p align="center">
     <a href="http://news.pamdev.ru" target="_blank">
         <h1 align="center">News</h1>
