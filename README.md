@@ -1,3 +1,4 @@
+test-task
 <p align="center">
     <a href="http://news.pamdev.ru" target="_blank">
         <h1 align="center">News</h1>
@@ -5,7 +6,7 @@
     admin admin/demo123, manager manager/demo123
 </p>
 
-Вся логика находится в директория core
+Вся логика находится в директории core
 
       core/entities все сущности 
     
